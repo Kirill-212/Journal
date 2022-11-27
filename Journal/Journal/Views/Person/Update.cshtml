@@ -1,0 +1,61 @@
+﻿@model Journal.Dto.Update.UpdatePersonDto
+@using Journal.Dto.Get
+@{
+}
+<div class="container border w-50">
+    <form method="post" action="Update">
+        <div class="row text-center"><h5>Изменить отдел</h5></div>
+        <div class="row">
+            <div class="col input-group mb-3 w-100">
+                <span class="input-group-text w-50" id="basic-addon1" for="Name">
+                    Имя
+                </span>
+                <input type="text" class="w-50" asp-for="FirstName" value="@(ViewBag.Person.FirstName)" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="LastName">
+                    Фамилия
+                </span>
+                <input type="text" class="w-50" asp-for="LastName" value="@(ViewBag.Person.LastName)" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="Surname">
+                    Отчество
+                </span>
+                <input type="text" class="w-50" asp-for="Surname" value="@(ViewBag.Person.Surname)" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="DepartmentId">
+                    Отдел
+                </span>
+                <select class="w-50" asp-for="DepartmentId">
+                    <option value="@(ViewBag.Person.GetDepartmentDto.Id)">@(ViewBag.Person.GetDepartmentDto.Name)</option>
+                    @foreach (GetDepartmentDto i in ViewBag.Departments)
+                    {
+                        if (i.Id != ViewBag.Person.GetDepartmentDto.Id)
+                        {
+                            <option value="@(i.Id)">@(i.Name)</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <input type="number" asp-for="Id" value="@(ViewBag.Person.Id)" hidden="true" />
+            <span asp-validation-for="FirstName"></span>
+            <span asp-validation-for="LastName"></span>
+            <span asp-validation-for="Surname"></span>
+            <span asp-validation-for="DepartmentId"></span>
+        </div>
+        <div class="row">
+            <div class="col text-right"><input class="btn btn-success" type="submit" value="Отправить" /></div>
+            <div class="col text-left"><input class="btn btn-warning" type="reset" value="Сбросить" /></div>
+        </div>
+    </form>
+</div>

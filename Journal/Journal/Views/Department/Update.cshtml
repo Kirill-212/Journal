@@ -1,0 +1,35 @@
+﻿@model Journal.Dto.Get.GetDepartmentDto
+@{
+}
+<div class="container border w-50">
+    <form method="post" action="Update">
+        <div class="row text-center"><h5>Изменить отдел</h5></div>
+        <div class="row">
+            <div class="col input-group mb-3 w-100">
+                <span class="input-group-text w-50" id="basic-addon1" for="Name">
+                    Полное наименование
+                </span>
+                <input type="text" class="w-50" asp-for="Name" value="@(Model.Name)" />
+
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="ShortName">
+                    Короткое наименование
+                </span>
+                <input type="text" class="w-50" asp-for="ShortName" value="@(Model.ShortName)" />
+            </div>
+
+        </div>
+        <div class="row">
+            <input type="number" asp-for="Id" value="@(Model.Id)" hidden="true" />
+            <span asp-validation-for="Name"></span>
+            <span asp-validation-for="ShortName"></span>
+        </div>
+        <div class="row">
+            <div class="col text-right"><input class="btn btn-success" type="submit" value="Отправить" /></div>
+            <div class="col text-left"><input class="btn btn-warning" type="reset" value="Сбросить" /></div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,58 @@
+﻿@model Journal.Paging.PagedList<Journal.Dto.Get.GetDepartmentDto>
+@using Journal.Dto.Get
+
+<div class="container">
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Короткое наименование</th>
+                <th>Полное наименование</th>
+                <th>Опции</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (GetDepartmentDto i in Model)
+            {
+                <tr>
+                    <th>@i.Id</th>
+                    <th>@i.ShortName</th>
+                    <th>@i.Name</th>
+                    <th>
+                        <div class="input-group">
+                            <a asp-action="Delete"
+                           asp-route-id="@i.Id"
+                           asp-route-pageNumber="@(Model.CurrentPage)"
+                           class="btn btn-danger">
+                                Удалить
+                            </a>
+                            <a asp-action="Update"
+                           asp-route-id="@i.Id"
+                           class="btn btn-primary" role="button">
+                                Изменить
+                            </a>
+                        </div>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Model.HasPrevious)
+    {
+        <a asp-action="GetAll"
+       asp-route-PageNumber="@(Model.CurrentPage - 1)"
+       class="btn btn-outline-dark">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Назад
+        </a>
+    }
+    @if (Model.HasNext)
+    {
+        <a asp-action="GetAll"
+       asp-route-PageNumber="@(Model.CurrentPage + 1)"
+       class="btn btn-outline-dark">
+            Вперед
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+</div>

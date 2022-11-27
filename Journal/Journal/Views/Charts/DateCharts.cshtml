@@ -1,0 +1,171 @@
+﻿
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<div class="container border w-50">
+    <form>
+        <div class="row">
+            <div class="col input-group mb-3 w-100">
+                <span class="input-group-text w-50" id="basic-addon1">
+                    Дата начала
+                </span>
+                <input type="date" class="w-50 start" required name="start" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col input-group mb-3 w-100">
+                <span class="input-group-text w-50" id="basic-addon1">
+                    Дата конца
+                </span>
+                <input type="date" class="w-50 end" required name="end" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right"><input class="btn btn-success" type="button" value="Отправить" onclick="GetData()" /></div>
+            <div class="col text-left"><input class="btn btn-warning" type="reset" value="Сбросить" /></div>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col" id="barChart"></div>
+    <div class="col" id="pieChart"></div>
+</div>
+<div class="row">
+    <div class="col" id="barChartDepartments"></div>
+    <div class="col" id="pieChartDepartments"></div>
+</div>
+
+<script>
+    function LoadBarChart(inputData) {
+        google.charts.load('current', {
+            callback: drawChart,
+            packages: ['corechart']
+        });
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'ФИО');
+            data.addColumn('number', 'Часы работы');
+            data.addRows(inputData);
+
+            var options = {
+                'title': 'Сотрудники и сумма в часах их платных услуг',
+                'width': 600,
+                'height': 600
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('barChart'));
+            chart.draw(data, options);
+        }
+    }
+
+    function LoadBarChartDepartments(inputData) {
+        google.charts.load('current', {
+            callback: drawChart,
+            packages: ['corechart']
+        });
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Отдел');
+            data.addColumn('number', 'Часы работы');
+            data.addRows(inputData);
+
+            var options = {
+                'title': 'Отделы и сумма в часах их платных услуг',
+                'width': 600,
+                'height': 600
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('barChartDepartments'));
+            chart.draw(data, options);
+        }
+    }
+
+    function LoadPieChart(inputData) {
+        google.charts.load('current', {
+            callback: drawChart,
+            packages: ['corechart']
+        });
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'ФИО');
+            data.addColumn('number', 'Часы работы');
+            data.addRows(inputData);
+
+            var options = {
+                'title': 'Сотрудники и сумма в часах их платных услуг',
+                'width': 600,
+                'height': 600,
+                is3D: true
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+            chart.draw(data, options);
+        }
+    }
+
+    function LoadPieChartDepartments(inputData) {
+        google.charts.load('current', {
+            callback: drawChart,
+            packages: ['corechart']
+        });
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Отдел');
+            data.addColumn('number', 'Часы работы');
+            data.addRows(inputData);
+
+            var options = {
+                'title': 'Отделы и сумма в часах их платных услуг',
+                'width': 600,
+                'height': 600,
+                is3D: true
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('pieChartDepartments'));
+            chart.draw(data, options);
+        }
+    }
+
+    function GetData() {
+        const start = document.querySelector('.start').value
+        const end = document.querySelector('.end').value
+        console.log(start, end)
+        fetch('/Charts/DateData?' + new URLSearchParams({
+            start: start,
+            end: end,
+        }))
+            .then((response) => {
+                return response.json();
+            })
+            .then((result) => {
+                let data = result.map((el) => {
+                    return [el.name, el.value];
+                })
+                LoadBarChart(data)
+                LoadPieChart(data)
+            });
+        fetch('/Charts/DateDataDepartments?' + new URLSearchParams({
+            start: start,
+            end: end,
+        }))
+            .then((response) => {
+                return response.json();
+            })
+            .then((result) => {
+                let data = result.map((el) => {
+                    return [el.name, el.value];
+                });
+                LoadBarChartDepartments(data)
+                LoadPieChartDepartments(data)
+            });
+
+        return false;
+    }
+</script>
+
+
+
+
+

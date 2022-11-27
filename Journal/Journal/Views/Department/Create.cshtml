@@ -1,0 +1,34 @@
+﻿@model Journal.Dto.Create.PostDepartmentDto
+@{
+}
+<div class="container border w-50">
+    <form method="post" action="Create">
+        <div class="row text-center"><h5>Создать отдел</h5></div>
+        <div class="row">
+            <div class="col input-group mb-3 w-100">
+                <span class="input-group-text w-50" id="basic-addon1" for="Name">
+                    Полное наименование
+                </span>
+                <input type="text" class="w-50" asp-for="Name" value="" />
+
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="ShortName">
+                    Короткое наименование
+                </span>
+                <input type="text" class="w-50" asp-for="ShortName" value="" />
+            </div>
+
+        </div>
+        <div class="row">
+            <span asp-validation-for="Name"></span>
+            <span asp-validation-for="ShortName"></span>
+        </div>
+        <div class="row">
+            <div class="col text-right"><input class="btn btn-success" type="submit" value="Отправить" /></div>
+            <div class="col text-left"><input class="btn btn-warning" type="reset" value="Сбросить" /></div>
+        </div>
+    </form>
+</div>

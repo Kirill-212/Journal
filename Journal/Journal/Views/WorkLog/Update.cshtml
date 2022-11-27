@@ -1,0 +1,61 @@
+﻿@model Journal.Dto.Update.UpdateWorkLogDto
+@using Journal.Dto.Get
+@{
+}
+<div class="container border w-50">
+    <form method="post" action="Update">
+        <div class="row text-center"><h5>Изменить запись</h5></div>
+        <div class="row">
+            <div class="col input-group mb-3 w-100">
+                <span class="input-group-text w-50" id="basic-addon1" for="Date">
+                    Дата
+                </span>
+                <input type="date" class="w-50" asp-for="Date" value="@(ViewBag.WorkLog.Date.Year)-@(ViewBag.WorkLog.Date.Month)-@(ViewBag.WorkLog.Date.Day)" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="StartTime">
+                    Время начала
+                </span>
+                <input type="time" class="w-50" asp-for="StartTime" value="@(ViewBag.WorkLog.StartTime.ToShortTimeString())" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="EndTime">
+                    Время конца
+                </span>
+                <input type="time" class="w-50" asp-for="EndTime" value="@(ViewBag.WorkLog.EndTime.ToShortTimeString())" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="PersonId">
+                    Сотрудник
+                </span>
+                <select class="w-50" asp-for="PersonId">
+                    <option value="@(ViewBag.WorkLog.GetPersonDto.Id)">@(ViewBag.WorkLog.GetPersonDto.FirstName + ' ' + ViewBag.WorkLog.GetPersonDto.LastName + ' ' + ViewBag.WorkLog.GetPersonDto.Surname)</option>
+                    @foreach (GetPersonDto i in ViewBag.Persons)
+                    {
+                        if (i.Id != ViewBag.WorkLog.GetPersonDto.Id)
+                        {
+                            <option value="@(i.Id)">@(i.FirstName + ' ' + i.LastName + ' ' + i.Surname)</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <input type="number" asp-for="Id" value="@(ViewBag.WorkLog.Id)" hidden="true" />
+            <span asp-validation-for="Date"></span>
+            <span asp-validation-for="EndTime"></span>
+            <span asp-validation-for="StartTime"></span>
+            <span asp-validation-for="PersonId"></span>
+        </div>
+        <div class="row">
+            <div class="col text-right"><input class="btn btn-success" type="submit" value="Отправить" /></div>
+            <div class="col text-left"><input class="btn btn-warning" type="reset" value="Сбросить" /></div>
+        </div>
+    </form>
+</div>

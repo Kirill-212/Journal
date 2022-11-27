@@ -1,0 +1,55 @@
+﻿@model Journal.Dto.Create.PostWorkLogDto
+@using Journal.Dto.Get
+<div class="container border w-50">
+    <form method="post" action="Create">
+        <div class="row text-center"><h5>Создать посещение</h5></div>
+        <div class="row">
+            <div class="col input-group mb-3 w-100">
+                <span class="input-group-text w-50" id="basic-addon1" for="Date">
+                    Дата
+                </span>
+                <input type="date" class="w-50" asp-for="Date" value="" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="LastName">
+                    Время начала
+                </span>
+                <input type="time" class="w-50" asp-for="StartTime" value="" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="Surname">
+                    Время конца
+                </span>
+                <input type="time" class="w-50" asp-for="EndTime" value="" />
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col input-group mb-3">
+                <span class="input-group-text w-50" id="basic-addon1" for="PersonId">
+                    Сотрудник
+                </span>
+                <select class="w-50" asp-for="PersonId">
+                    <option value=""></option>
+                    @foreach (GetPersonDto i in ViewBag.Persons)
+                    {
+                        <option value="@(i.Id)">@(i.FirstName + ' ' + i.LastName + ' ' + i.Surname)</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <span asp-validation-for="Date"></span>
+            <span asp-validation-for="StartTime"></span>
+            <span asp-validation-for="EndTime"></span>
+            <span asp-validation-for="PersonId"></span>
+        </div>
+        <div class="row">
+            <div class="col text-right"><input class="btn btn-success" type="submit" value="Отправить" /></div>
+            <div class="col text-left"><input class="btn btn-warning" type="reset" value="Сбросить" /></div>
+        </div>
+    </form>
+</div>

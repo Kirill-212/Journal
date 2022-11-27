@@ -1,0 +1,72 @@
+﻿@model Journal.Paging.PagedList<Journal.Dto.Get.GetWorkLogTableDto>
+@using Journal.Dto.Get
+
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+            <th>Отдел</th>
+            <th>Дата</th>
+            <th>Время начала</th>
+            <th>Время конца</th>
+            <th>Часы + минуты</th>
+            <th>Время работы в часах</th>
+            <th>Опции</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (GetWorkLogTableDto i in Model)
+        {
+            <tr>
+                <th>@i.GetWorkLogDto.Id</th>
+                <th>@i.GetWorkLogDto.GetPersonDto.FirstName</th>
+                <th>@i.GetWorkLogDto.GetPersonDto.LastName</th>
+                <th>@i.GetWorkLogDto.GetPersonDto.Surname</th>
+                <th>@i.GetWorkLogDto.GetPersonDto.GetDepartmentDto.ShortName</th>
+                <th>@i.GetWorkLogDto.Date.ToShortDateString()</th>
+                <th>@i.GetWorkLogDto.StartTime.ToShortTimeString()</th>
+                <th>@i.GetWorkLogDto.EndTime.ToShortTimeString()</th>
+                <th>@i.Hour:@i.Minute</th>
+                <th>@i.TranslateHour</th>
+                <th>
+                    <div class="input-group">
+                        <a asp-action="Delete"
+                       asp-route-id="@i.GetWorkLogDto.Id"
+                       asp-route-pageNumber="@(Model.CurrentPage)"
+                       class="btn btn-danger">
+                            Удалить
+                        </a>
+                        <a asp-action="Update"
+                       asp-route-id="@i.GetWorkLogDto.Id"
+                       class="btn btn-primary" role="button">
+                            Изменить
+                        </a>
+                    </div>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.HasPrevious)
+{
+    <a asp-action="GetAll"
+   asp-route-PageNumber="@(Model.CurrentPage - 1)"
+   class="btn btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.HasNext)
+{
+    <a asp-action="GetAll"
+   asp-route-PageNumber="@(Model.CurrentPage + 1)"
+   class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}
+
